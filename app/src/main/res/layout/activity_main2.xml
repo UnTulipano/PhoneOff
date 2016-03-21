@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/tabhost"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+        <RelativeLayout
+            android:id="@+id/top_tab"
+            android:layout_width="match_parent"
+            android:layout_height="50dip"
+            android:background="@color/topbar_bg" >
+
+            <!--<ImageView
+                android:id="@+id/iv_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:focusable="false"
+                android:src="@drawable/zhidao_logo"
+                android:contentDescription="@null" />-->
+
+
+        </RelativeLayout>
+
+        <FrameLayout
+            android:id="@+id/msg_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/tv_wb"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+            </TextView>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@android:id/tabcontent"
+            android:layout_width="fill_parent"
+            android:layout_height="0.0dip"
+            android:layout_weight="1.0"
+            android:baselineAligned="true"/>
+
+
+        <TabWidget
+            android:id="@android:id/tabs"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:visibility="gone" />
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+
+            android:background="@color/line" />
+        <RadioGroup
+            android:id="@+id/main_radio"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            >
+
+            <RadioButton
+                android:id="@+id/radio_button0"
+                style="@style/main_tab_bottom"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2.0dip"
+                android:drawableTop="@drawable/btn_know_nor"
+                android:tag="radio_button0"
+                android:text="主页"
+                android:textColor="@color/bottomtab_normal"
+                />
+
+            <RadioButton
+                android:id="@+id/radio_button1"
+                style="@style/main_tab_bottom"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="2.0dip"
+                android:drawableTop="@drawable/btn_wantknow_nor"
+                android:tag="radio_button1"
+                android:text="分析"
+                android:textColor="@color/bottomtab_normal"/>
+
+            <RadioButton
+                android:id="@+id/radio_button2"
+                style="@style/main_tab_bottom"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="2.0dip"
+                android:drawableTop="@drawable/btn_my_nor"
+                android:tag="radio_button2"
+                android:text="我的"
+                android:textColor="@color/bottomtab_normal" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+</TabHost>
+
+
