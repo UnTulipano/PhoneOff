@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.os.Vibrator;
@@ -345,6 +346,28 @@ public class Utils {
             str = "(╰_╯)# 怎么会这样，快快反思一下吧";
         }
         return  str;
+    }
+
+    public static void overTimeRemind (Context context){
+
+        SharedPreferences sp=context.getSharedPreferences("actm", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=sp.edit();
+        //设置的时间
+        int time1 = PApplication.TIME;
+        //已经使用的时间
+        int time2 = Utils.timeInMillisToMinutes(Utils.getTodaySumMinutes(context));
+
+        if(time1<=time2) {
+            //读取提醒方式
+            boolean style1 = sp.getBoolean("style1", true);  //是否发送通知
+            boolean style2 = sp.getBoolean("style2", true);  //是否震动
+            if (style1 == true) {
+                Utils.sendNotification(context, time2 - time1);
+            }
+            if (style2 == true) {
+                Utils.vibrator(context, new long[]{1000, 1000, 1000}, -1);
+            }
+        }
     }
 
 }

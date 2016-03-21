@@ -12,12 +12,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.os.IBinder;
-import android.os.Vibrator;
-import android.support.v7.app.AlertDialog;
-import android.widget.Toast;
 import com.iteam.phoneoff.Main2Activity;
-import com.iteam.phoneoff.MainActivity;
-import com.iteam.phoneoff.PApplication;
 import com.iteam.phoneoff.R;
 import com.iteam.phoneoff.base.User;
 import com.iteam.phoneoff.utils.Utils;
@@ -31,16 +26,15 @@ import java.util.Date;
  */
 public class MyService extends Service {
 
+    SharedPreferences sp=getSharedPreferences("actm", Context.MODE_PRIVATE);
+    SharedPreferences.Editor editor=sp.edit();
     User user = new User();
+    FinalDb db = FinalDb.create(getApplication());
 
     private final BroadcastReceiver receiver=new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            SharedPreferences sp=getSharedPreferences("actm", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor=sp.edit();
 
-            FinalDb db = FinalDb.create(getApplication());
-            sendNotification();
             //屏幕点亮
             if(intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
 
@@ -51,29 +45,8 @@ public class MyService extends Service {
                 user.setStartTime(Utils.getNowData());
                 user.setStartTimeStamp((new Date().getTime()));
 
-                //设置的时间
-                int time1 = PApplication.TIME;
-                //已经使用的时间
-                int time2 = Utils.timeInMillisToMinutes(Utils.getTodaySumMinutes(getApplicationContext()));
-
-                if(time1<=time2){
-                    //读取提醒方式
-                    boolean style1 = sp.getBoolean("style1",true);  //是否发送通知
-                    boolean style2 = sp.getBoolean("style2",true);  //是否震动
-                    if(style1==true)
-                    {
-                        Utils.sendNotification(MyService.this, time2 - time1);
-                    }
-                    if(style2==true)
-                    {
-                       Utils.vibrator(getApplicationContext(), new long[]{1000,1000,1000}, -1);
-                    }
-
-
-                }
-
-
-
+                //超时提醒
+                Utils.overTimeRemind(getApplicationContext());
 
 
             }
@@ -100,6 +73,12 @@ public class MyService extends Service {
         filter.addAction(Intent.ACTION_SCREEN_ON);
         filter.addAction(Intent.ACTION_SCREEN_OFF);
         registerReceiver(receiver, filter);
+        //保存屏幕启动时的毫秒数
+        editor.putLong("lasttime", new Date().getTime());
+        editor.commit();
+
+        user.setStartTime(Utils.getNowData());
+        user.setStartTimeStamp((new Date().getTime()));
     }
 
 

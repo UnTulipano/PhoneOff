@@ -2,12 +2,14 @@ package com.iteam.phoneoff;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.widget.Toast;
 
 import com.iteam.phoneoff.base.Setting;
 
 import net.tsz.afinal.FinalDb;
 
+import java.util.Date;
 import java.util.List;
 
 /**
