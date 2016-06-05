@@ -26,14 +26,15 @@ import java.util.Date;
  */
 public class MyService extends Service {
 
-    SharedPreferences sp=getSharedPreferences("actm", Context.MODE_PRIVATE);
-    SharedPreferences.Editor editor=sp.edit();
     User user = new User();
-    FinalDb db = FinalDb.create(getApplication());
 
     private final BroadcastReceiver receiver=new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            SharedPreferences sp=getSharedPreferences("actm", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor=sp.edit();
+
+            FinalDb db = FinalDb.create(getApplication());
 
             //屏幕点亮
             if(intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
@@ -74,6 +75,8 @@ public class MyService extends Service {
         filter.addAction(Intent.ACTION_SCREEN_OFF);
         registerReceiver(receiver, filter);
         //保存屏幕启动时的毫秒数
+        SharedPreferences sp=getSharedPreferences("actm", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=sp.edit();
         editor.putLong("lasttime", new Date().getTime());
         editor.commit();
 
